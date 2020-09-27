@@ -1,4 +1,4 @@
-# GRABRIELLIX IN THE LAKE
+# GABRIELLIX IN THE LAKE
 
 Jogo produzido com base nos conhecimentos adquiridos na ótima imersão gameDev da Alura.
 
