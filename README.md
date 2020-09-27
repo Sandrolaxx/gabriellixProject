@@ -2,7 +2,7 @@
 
 Jogo produzido com base nos conhecimentos adquiridos na ótima imersão gameDev da Alura.
 
-O enredo do jogo gira em torno de uma garota chamada Gabriellix que descobre que era uma bruxa e também que tem um destino a para ser comprido, este que é salvar o lago municipal da cidade do ataque de Vilgax o vilão da historia(também vilão do ben10 nas horas livres) que estava transformando todo o ecosistema do lago, essa perversão calsada por Vilgax criou os três animigos do jogo, que são eles, a gota mutante com vida do lago, a gota mutante voadora e as capivaras que após a mutação viraram trolls.   
+O enredo do jogo gira em torno de uma garota chamada Gabriellix que descobre que era uma bruxa e também que tem um destino a para ser comprido, este que é salvar o lago municipal da cidade do ataque de Vilgax o vilão da historia(também vilão do ben10 nas horas livres) que estava transformando todo o ecossistema do lago, essa perversão causada por Vilgax criou os três inimigos do jogo, que são eles, a gota mutante com vida do lago, a gota mutante voadora e as capivaras que após a mutação viraram trolls.  
 
 ## Como jogar?
 
