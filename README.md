@@ -16,7 +16,9 @@ Basta baixar o arquivo do projeto, extrair ele para um díretorio em seu PCzão 
 
 ## Autores
 
-* **Sandro Matheus Ramos** - [Sandro Ramos](https://www.linkedin.com/in/sandro-ramos-5a53011b3/)
+* **Sandro Matheus Ramos** 
+*[Linkedin](https://www.linkedin.com/in/sandro-ramos-5a53011b3/)
+*[Git](https://github.com/Sandrolaxx)
 
 ## Imagens do Jogo
 
