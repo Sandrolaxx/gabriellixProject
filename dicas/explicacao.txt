@@ -1,0 +1,392 @@
+let imagemCenario;
+let imagemPersonagem;
+let alturaPersonagem = 135;
+let larguraPersonagem = 110;
+let cenario;
+let somJogo;
+
+function preload() {
+  imagemCenario = loadImage('imagens/cenario/floresta.png');
+  imagemPersonagem = loadImage('imagens/personagem/correndo.png');
+  somJogo = loadSound('sons/trilha_jogo.mp3');
+}
+
+function setup() {
+  //frameRate(2);  Podemos controlar até o framerate do jogo
+  createCanvas(windowWidth, windowHeight);
+  cenario = new Cenario(imagemCenario, 3);
+  //somJogo.loop();//Não colocamos ele no draw se não a trilha seria iniciada varias vezes!
+}
+
+//Tal do gameloop, o P5 já faz isso automaticamente
+function draw() {
+  cenario.exibe();
+  cenario.move();
+  image(imagemPersonagem,0 , height - alturaPersonagem, larguraPersonagem, alturaPersonagem, 0 , 0, 220, 270);//Aqui passamos a imagem que queremos do personagem, 
+  //o terceiro e quarto paramêtro é o tamanho da imagem que queremos.                                           e os outros dois parametros (X e Y) é o lugar da tela.              
+  //o quinto e sexto paramêtro é o ponto 0, 0 da imagem total, estamos dizendo vai no ponto 0,0 da imagem e pega o que tiver lá.
+  //o setimo e oitavo paramêtro é o tanto do ponto 0,0 do quinto e sexto paramêtro que vamos pegar, no caso vai no ponto 0,0 e pega o 220/270 pixels do que tiver lá.
+  //Esses valores do setimo e oitavo paramêtro são proporcionais ao tamanho da imagem, por isso é diferente do tamanho do terceiro e quarto paramêtro.
+  //Agora precisamos colocar ele na parte de baixo, para fazer isso vamos alterar o segundo paramêtro o eixo Y, vamos pegar a altura total da tela - o tamanho da imagem, 
+}                                                                                                                                    //assim jogamos a imagem para baixo.  
+
+//Criando a classe para fazer o efeito e cenario infinito, fazendo tipo um cilindro com a imagem
+class Cenario {
+  constructor(imagem, velociade) {
+    this.imagem = imagem;
+    this.velociade = velociade;
+    this.x1 = 0;
+    this.x2 = width;
+  }
+
+  exibe() {//'Deixamos as imagens coladas'
+    image(this.imagem, this.x1, 0, width,height);
+    image(this.imagem, this.x2, 0, width, height);
+  }
+
+  //Básicamente colocamos uma imagem ao lado da outra, agora precisamos fazer a lógica que para quando a segunda 
+  //imagem acabar vir a primeira e assim sucessivamente, para assim criar um looping nas imagens
+  move() {
+    this.x1 = this.x1 - this.velociade;
+    this.x2 = this.x2 - this.velociade;
+
+    if (this.x1 < -width){//Podemos usar o tamanho da imagem até que ele seja menor que o tamanho da imagem em pixel só que negativo, exemplificando temos uma 
+      //imagem de 400px, quando ela for menor que o width negativo dela que seria -400, ela recebe o valor do widht novamente ou seja o 400px positivos,
+      //e esses e até chagar nesses -400px a segunda iamgem esterá passando, ou seja, enquanto a imagem 1 vai ficando negativa e passando, a imagem2 o acompanha
+      //e quando ele chega nos -400px ele fica com o valor padrão 400px e começar o looping novamente, e aplicamos isso também na imagem 2.                                  
+      this.x1 = width;    
+    }
+
+    if (this.x2 < -width){
+      this.x2 = width;
+    }
+  }
+}
+
+
+//----------------------------------------------EXPLICAÇÕES
+//P5 cria duas funções iniciais, uma cria o tamanho da tela e a outra a cor em rgb
+//A função setup é executada uma vez antes do nosso jogo ser desenhado
+/*function setup() {
+  createCanvas(400, 400);//Já está criando um kanvas de 400 por 400 e colocando um background com a cor 220
+}
+
+//A função draw é executado diversas vezes, criando nossa animação
+function draw() {
+  image(imagemCenario, -50, 0, width, height);//Primeiro desenhamos o cenario e depois a personagem, se não o cenario vai sobrepor a personagem. 
+  image(imagemCenario, width - 50, 0, width, height);//Agora colocamos outra imagem ao lado e precisamos criar o efeito de cilindro, fazemos isso na classe Cenario
+}
+
+//o P5 vai usar o kanvas para criar as animações*/
+
+
+-----------------------------------------------------------------------------------
+class Personagem {
+    constructor(imagem){
+        this.imagem = imagem;
+        //Essa é a matriz da nossa imagem, e em cada determinado pixel queremos pegar e exibir ele, para assim criar a animação
+        this.matriz = [
+            [0, 0],
+            [220, 0],
+            [440, 0],
+            [660, 0],
+            [0, 270],
+            [220, 270],
+            [440, 270],
+            [660, 270],
+            [0, 540],
+            [220, 540],
+            [440, 540],
+            [660, 540],
+            [0, 810],
+            [220, 810],
+            [440, 810],
+            [660, 810],
+        ]
+    }
+
+    exibe(){
+        image(imagemPersonagem, 0, height - alturaPersonagem, larguraPersonagem, 
+              alturaPersonagem, 
+              this.matriz[this.frameAtual][0],//Aqui colocamos o valor do frameAtual da nossa matriz que será incrementado a criação do draw
+              this.matriz[this.frameAtual][1], 220, 270);
+              this.anima();
+    }
+
+    anima(){
+        this.frameAtual++;
+
+        if(this.frameAtual >= this.matriz.length - 1){
+            this.frameAtual = 0;
+        }
+    }
+}
+
+------
+        //no código original substituimos essa matriz por um calculo matematico
+        que básicamente reacria os valores da matriz.
+exibe(){
+        let x = this.frameAtual % 4 * 220;
+        let y = Math.floor(this.frameAtual / 4) * 270;
+
+        image(imagemPersonagem, 0, height - alturaPersonagem, larguraPersonagem, 
+              alturaPersonagem, x, y, 220, 270);
+              this.anima();
+    }
+-----------------------------------------------------------------------------------------------------
+Classe do personagem antes de criarmos a classe abstrata animação
+
+let larguraSprite = 220;
+let alturaSprite = 270;
+
+class Personagem {
+    constructor(imagem){
+        this.imagem = imagem;
+        this.frameAtual = 0;
+    }
+
+    exibe(){
+        let x = this.frameAtual % 4 * larguraSprite;
+        let y = Math.floor(this.frameAtual / 4) * alturaSprite;
+
+        image(imagemPersonagem, 0, height - alturaPersonagem, larguraPersonagem, 
+              alturaPersonagem, x, y, larguraSprite, alturaSprite);
+              this.anima();
+    }
+
+    anima(){
+        this.frameAtual++;
+
+        if(this.frameAtual >= 15){
+            this.frameAtual = 0;
+        }
+    }
+}    
+
+-------
+
+let larguraSprite = 104;
+let alturaSprite = 104;
+
+class Personagem {
+    constructor(imagem){
+        this.imagem = imagem;
+        this.frameAtual = 0;
+    }
+
+    exibe(){
+        let x = this.frameAtual % 4 * larguraSprite;
+        let y = Math.floor(this.frameAtual / 4) * alturaSprite;
+
+        image(this.imagem, width - 52, height - 52, 52, 
+              52, x, y, larguraSprite, alturaSprite);
+              this.anima();
+    }
+
+    anima(){
+        this.frameAtual++;
+
+        if(this.frameAtual >= 16){
+            this.frameAtual = 0;
+        }
+    }
+}  
+
+-----
+let larguraSprite = 106;
+let alturaSprite = 102;
+
+class Personagem {
+    constructor(imagem){
+        this.imagem = imagem;
+        this.frameAtual = 0;
+    }
+
+    exibe(){
+        let x = this.frameAtual % 4 * larguraSprite;
+        let y = Math.floor(this.frameAtual / 4) * alturaSprite;
+
+        image(this.imagem, width - 53, height - 53, 53, 
+              56, x, y, larguraSprite, alturaSprite);
+              this.anima();
+    }
+
+    anima(){
+        this.frameAtual++;
+
+        if(this.frameAtual >= 27){
+            this.frameAtual = 0;
+        }
+    }
+} 
+
+-------------
+Na classe personagem
+
+
+class Personagem extends Animacao {
+    constructor(imagem, x, largura, altura, larguraSprite, alturaSprite,tamanhoSprite) {
+        super(imagem, x, largura, altura, larguraSprite, alturaSprite,tamanhoSprite)
+        
+        this.yInicial = height - this.altura;
+        this.y = this.yInicial;
+
+        this.velocidadePulo = 0;
+        this.gravidade = 3;
+    }
+
+    pula() {
+        this.velocidadePulo =  - 50;
+    }
+
+    aplicaGravidade() {
+        this.y = this.y + this.velocidadePulo;
+        this.velocidadePulo = this.velocidadePulo + this.gravidade;
+
+        if (this.y > this.yInicial) {
+            this.y = this.yInicial;
+        }
+    }
+    
+    //Aqui conseguimos ver a hitbox dos elementos!!
+    estaColidindo(inimigo) {
+        noFill()//Com isso conseguimos ver a hitbox dos elementos!!
+        rect(this.x, this.y, this.largura, this.altura)//Com isso conseguimos ver a hitbox dos elementos!!
+        rect(inimigo.x, inimigo.y,inimigo.largura,
+            inimigo.altura )//Com isso conseguimos ver a hitbox dos elementos!!
+        const precisao = .7;//Diminuindo o tamanho da hitbox   
+        const colisao = collideRectRect(
+            this.x,
+            this.y,
+            this.largura * precisao,
+            this.altura * precisao,
+            inimigo.x,
+            inimigo.y,
+            inimigo.largura * precisao,
+            inimigo.altura * precisao
+        )
+
+        return colisao;
+    }
+} 
+---------------Sketch antes da aula 4
+
+let imagemCenario;
+let imagemPersonagem;
+let imagemInimigo;
+let imagemGameOver;
+let cenario;
+let personagem;
+let inimigo;
+let inimigoGrande;
+let inimigoVoador;
+let somJogo;
+let somPulo;
+let somGameOver;
+let pontuacao;
+const inimigos = [];
+
+function preload() {
+  imagemCenario = loadImage('imagens/cenario/floresta.png');
+  imagemInimigo = loadImage('imagens/inimigos/gotinha.png');
+  imagemInimigoGrande = loadImage('imagens/inimigos/troll.png');
+  imagemInimigoVoador = loadImage('imagens/inimigos/gotinha-voadora.png');
+  imagemPersonagem = loadImage('imagens/personagem/correndo.png');
+  imagemGameOver = loadImage('imagens/assets/game-over.png');
+  somJogo = loadSound('sons/trilha_jogo.mp3');
+  somPulo = loadSound('sons/jump_song.mp3');
+  somGameOver = loadSound('sons/game_over_song.mp3');
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  cenario = new Cenario(imagemCenario, 3);
+  pontuacao = new Pontuacao();
+  personagem = new Personagem(imagemPersonagem, 0, 30, 4, 110, 135, 220, 270, 16);
+  const inimigo = new Inimigo(imagemInimigo, width - 52, 30, 4, 52, 56, 104, 104, 28, 10, 200);
+  const inimigoGrande = new Inimigo(imagemInimigoGrande, width - 53, 0, 4, 200, 200, 400, 400, 24, 8, 800);
+  const inimigoVoador = new Inimigo(imagemInimigoVoador, width - 52, 250, 3, 100, 75, 200, 150, 16, 7, 1200);
+  frameRate(40);
+  somJogo.loop();
+
+  inimigos.push(inimigo);
+  inimigos.push(inimigoGrande);
+  inimigos.push(inimigoVoador);
+}
+
+function keyPressed() {
+  if(keyCode === 32 || keyCode === 38) {
+    personagem.pula();
+    somPulo.play();
+  }
+}
+
+function draw() {
+  cenario.exibe();
+  cenario.move();
+
+  pontuacao.exibe();
+  pontuacao.adicionaPonto();
+  
+  personagem.exibe();
+  personagem.aplicaGravidade();
+
+  inimigos.forEach(inimigos => {
+    inimigos.exibe();
+    inimigos.move();
+
+    if (personagem.estaColidindo(inimigos)) {
+      image(imagemGameOver, width/2 - 200, height/2.5);
+      noLoop();
+      somGameOver.play();
+    }
+  })
+
+}                                                                                        
+
+--Resolvendo o problema de perder varias vidas por frame:
+
+Para resolver esse problema precisamos deixar a personagem 'invencivel' por um breve momento.
+
+No constructor inserimos a váriavel que será responsavel por deixar a personagem 'invencivel'
+
+this.invencivel = false;
+
+Depois criamos uma função com um setTimout que irá deixar a personagem 'invencivel' por um periodo
+
+tornaInvencivel() {
+        this.invencivel = true;
+        setTimeout(() => {
+            this.invencivel = false;
+        },1000)
+    }
+
+------DEPOIS NA FUNÇÃO QUE VE SE ELE ESTÁ COLIDINDO SÓ VERIFICAMOS SE ELE NÃO ESTÁ...
+    estaColidindo(inimigo) {
+        if(this.invencivel){//ESSE BLOCO
+            return false;
+        }
+
+        const precisao = .7;
+
+        noFill()//Com isso conseguimos ver a hitbox dos elementos!!
+        rect(this.x, this.y, this.largura, this.altura)//Com isso conseguimos ver a hitbox dos elementos!!
+        rect(inimigo.x, inimigo.y,inimigo.largura,
+            inimigo.altura )//Com isso conseguimos ver a hitbox dos elementos!!
+        const colisao = collideRectRect(
+            this.x,
+            this.y,
+            this.largura * precisao,
+            this.altura * precisao,
+            inimigo.x,
+            inimigo.y,
+            inimigo.largura * precisao,
+            inimigo.altura * precisao
+        )
+
+        return colisao;
+    }
+
+------------------------------REMOVEMOS O DELAY POR CONTA DE QUERERMOS CONTROLAR A QUANTIDADE DE INIMIGOS 
+E SUA ENTRADA NA TELA, REMOVEMOS EM 35 MIN DO 5 VIDEO, CASO QUEIRA UM JOGO INFINITO MANTER O DELAY.
+   
