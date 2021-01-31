@@ -7,7 +7,7 @@ class Pontuacao {
         textFont(fonteTelaInicial);
         textSize(75);
         fill('#fff');
-        text(parseInt(this.pontos), width - 665, 135);
+        text(parseInt(this.pontos), width - 950, 135);
     }
 
     adicionaPonto() { 
