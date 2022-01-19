@@ -22,18 +22,18 @@ Basta baixar o arquivo do projeto, extrair ele para um díretorio em seu PCzão 
 
 ## Imagens do Jogo
 
-*Tela Inicial 
+* Tela Inicial 
 
 ![Captura de tela de 2020-09-27 14-46-34](https://user-images.githubusercontent.com/61207420/94372567-36a8d380-00d5-11eb-86f9-f6bdf57d9fe8.png)
 
-*Gameplay
+* Gameplay
 
 ![Captura de tela de 2020-09-27 14-48-54](https://user-images.githubusercontent.com/61207420/94372577-4d4f2a80-00d5-11eb-96d4-ec559fec4dfb.png)
 
-*Game Over
+* Game Over
 
 ![Captura de tela de 2020-09-27 14-49-11](https://user-images.githubusercontent.com/61207420/94372584-5b04b000-00d5-11eb-9311-e5c2e9129c71.png)
 
-*Ganhando o jojo
+* Ganhando o jojo
 
 ![Captura de tela de 2020-09-27 14-49-58](https://user-images.githubusercontent.com/61207420/94372605-7e2f5f80-00d5-11eb-97a3-3293b7b5f4e2.png)
